@@ -8,10 +8,10 @@ public class Job {
     private static int nextId = 1;
 
     private String name;
-    private Employer employer;
-    private Location location;
-    private PositionType positionType;
-    private CoreCompetency coreCompetency;
+    private String employer;
+    private String location;
+    private String positionType;
+    private String coreCompetency;
 
     // TODO: Add two constructors - one to initialize a unique ID and a second to initialize the
     //  other five fields. The second constructor should also call the first in order to initialize
@@ -22,7 +22,7 @@ public class Job {
         nextId++;
     }
 
-    public Job(String name, Employer employer, Location location, PositionType positionType, CoreCompetency coreCompetency) {
+    public Job(String name, String employer, String location, String positionType, String coreCompetency) {
         this();
         this.name = name;
         this.employer = employer;
@@ -61,19 +61,19 @@ public class Job {
         return name;
     }
 
-    public Employer getEmployer() {
+    public String getEmployer() {
         return employer;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public PositionType getPositionType() {
+    public String getPositionType() {
         return positionType;
     }
 
-    public CoreCompetency getCoreCompetency() {
+    public String getCoreCompetency() {
         return coreCompetency;
     }
 
@@ -81,19 +81,52 @@ public class Job {
         this.name = name;
     }
 
-    public void setEmployer(Employer employer) {
+    public void setEmployer(String employer) {
         this.employer = employer;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public void setPositionType(PositionType positionType) {
+    public void setPositionType(String positionType) {
         this.positionType = positionType;
     }
 
-    public void setCoreCompetency(CoreCompetency coreCompetency) {
+    public void setCoreCompetency(String coreCompetency) {
         this.coreCompetency = coreCompetency;
+    }
+
+    @Override
+    public String toString() {
+        String str = "\n"+
+                "ID: " + id +
+                "\nName: " + name +
+                "\nEmployer: " + employer +
+                "\nLocation: " + location +
+                "\nPosition Type: " + positionType +
+                "\nCore Competency: " + coreCompetency +
+                "\n";
+
+        if(getName() == null || getName() == ""){
+            name = "Data not available";
+        }
+
+        if(getEmployer() == null || getEmployer() == ""){
+            employer = "Data not available";
+        }
+
+        if(getLocation() == null || getLocation() == ""){
+            location = "Data not available";
+        }
+
+        if(getPositionType() == null || getPositionType() == ""){
+            positionType = "Data not available";
+        }
+
+        if(getCoreCompetency() == null || getCoreCompetency() == ""){
+            coreCompetency = "Data not available";
+        }
+        return str;
     }
 }

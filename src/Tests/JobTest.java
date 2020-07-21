@@ -2,6 +2,7 @@ package Tests;
 
 import org.junit.Before;
 import org.junit.Test;
+import java.util.regex.*;
 
 import org.launchcode.techjobs_oo.*;
 
@@ -23,21 +24,63 @@ public class JobTest {
     public void testSettingJobId(){
 
         assertEquals(test_job.getId(),test_job2.getId(),1);
+
     }
 
     @Test
     public void testJobConstructorSetsAllFields(){
-        Job job1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        test_job = new Job("Product tester", "ACME",
+                "Desert", "Quality control",
+                "Persistence");
 
-        assertTrue(job1 instanceof Job);
+        assertEquals("Product tester", test_job.getName());
+        assertEquals("ACME", test_job.getEmployer());
+        assertEquals("Desert", test_job.getLocation());
+        assertEquals("Quality control", test_job.getPositionType());
+        assertEquals("Persistence", test_job.getCoreCompetency());
+
     }
 
     @Test
     public void testJobsForEquality() {
-        Job job1 = new Job("Project Lead", new Employer("PWC"), new Location("Tampa"), new PositionType("Supervisor"), new CoreCompetency("Leadership"));
-        Job job2 = new Job("Project Lead", new Employer("PWC"), new Location("Tampa"), new PositionType("Supervisor"), new CoreCompetency("Leadership"));
+        test_job = new Job("Project Lead", "Apple",
+                "Tampa", "Supervisor",
+                "Leadership");
+        test_job2 = new Job("Project Lead", "Apple",
+                "Tampa", "Supervisor",
+                "Leadership");
 
-        assertFalse(job1 == job2);
+        assertFalse(test_job == test_job2);
 
     }
+
+    @Test
+    public void testToStringReturnStringBetweenBlankLine(){
+        test_job = new Job("Project Lead", "Apple",
+                "Tampa", "Supervisor",
+                "Leadership");
+
+
+        Pattern pattern = Pattern.compile("^\n[\\d\\D]+\n$");
+        Matcher matcher = pattern.matcher(test_job.toString());
+        assertTrue(matcher.find());
+
+
+    }
+
+    @Test
+    public void testToString(){
+        test_job = new Job("Project Lead", "Apple",
+                "Tampa", "",
+                "");
+
+        Pattern pattern = Pattern.compile("\nID: " + test_job.getId() + "\nName: " + test_job.getName() + "\nEmployer: " +
+                test_job.getEmployer() + "\nLocation: " + test_job.getLocation() + "\nPosition Type: " + test_job.getPositionType() +
+                "\nCore Competency: " + test_job.getCoreCompetency());
+        Matcher matcher = pattern.matcher(test_job.toString());
+        assertTrue(matcher.find());
+
+    }
+
+
 }
