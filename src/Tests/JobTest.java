@@ -29,36 +29,37 @@ public class JobTest {
 
     @Test
     public void testJobConstructorSetsAllFields(){
-        test_job = new Job("Product tester", "ACME",
-                "Desert", "Quality control",
-                "Persistence");
 
-        assertEquals("Product tester", test_job.getName());
-        assertEquals("ACME", test_job.getEmployer());
-        assertEquals("Desert", test_job.getLocation());
-        assertEquals("Quality control", test_job.getPositionType());
-        assertEquals("Persistence", test_job.getCoreCompetency());
+        test_job = new Job("Product tester",new Employer("ACME"),
+                new Location("Mountain View"), new PositionType("Quality control"),
+                new CoreCompetency("Persistence"));
+
+        assertEquals(test_job.getName(), "Product tester");
+        assertEquals(test_job.getEmployer().getValue(), "ACME");
+        assertEquals(test_job.getLocation().getValue(), "Mountain View");
+        assertEquals(test_job.getPositionType().getValue(), "Quality control");
+        assertEquals(test_job.getCoreCompetency().getValue(), "Persistence");
 
     }
 
     @Test
     public void testJobsForEquality() {
-        test_job = new Job("Project Lead", "Apple",
-                "Tampa", "Supervisor",
-                "Leadership");
-        test_job2 = new Job("Project Lead", "Apple",
-                "Tampa", "Supervisor",
-                "Leadership");
+        test_job = new Job("Project Lead", new Employer("Apple"),
+                new Location("Tampa"), new PositionType("Supervisor"),
+                new CoreCompetency("Leadership"));
+        test_job2 = new Job("Project Lead", new Employer("Apple"),
+                new Location("Tampa"), new PositionType("Supervisor"),
+                new CoreCompetency("Leadership"));
 
-        assertFalse(test_job == test_job2);
+        assertNotSame(test_job, test_job2);
 
     }
 
     @Test
-    public void testToStringReturnStringBetweenBlankLine(){
-        test_job = new Job("Project Lead", "Apple",
-                "Tampa", "Supervisor",
-                "Leadership");
+    public void testToStringContainsBlankLine(){
+        test_job = new Job("Project Lead", new Employer("Apple"),
+                new Location(""), new PositionType("Supervisor"),
+                new CoreCompetency("Leadership"));
 
 
         Pattern pattern = Pattern.compile("^\n[\\d\\D]+\n$");
@@ -69,18 +70,32 @@ public class JobTest {
     }
 
     @Test
-    public void testToString(){
-        test_job = new Job("Project Lead", "Apple",
-                "Tampa", "",
-                "");
+    public void testToStringFieldsOnOwnLine(){
+        test_job = new Job("Product Tester", new Employer("Apple"),
+                new Location("Tampa"), new PositionType("Supervisor"),
+                new CoreCompetency("Leadership"));
 
-        Pattern pattern = Pattern.compile("\nID: " + test_job.getId() + "\nName: " + test_job.getName() + "\nEmployer: " +
-                test_job.getEmployer() + "\nLocation: " + test_job.getLocation() + "\nPosition Type: " + test_job.getPositionType() +
-                "\nCore Competency: " + test_job.getCoreCompetency());
-        Matcher matcher = pattern.matcher(test_job.toString());
-        assertTrue(matcher.find());
+
+        String pattern = "\nID: " + test_job.getId() + "\nName: " + test_job.getName() + "\nEmployer: " +
+                test_job.getEmployer().getValue() + "\nLocation: " + test_job.getLocation().getValue() + "\nPosition Type: " + test_job.getPositionType().getValue() +
+                "\nCore Competency: " + test_job.getCoreCompetency().getValue() + "\n";
+
+        assertEquals(pattern, test_job.toString());
+
 
     }
 
+    @Test
+    public void testToStringAddsTextToEmptyField() {
+        test_job = new Job("", new Employer(""),
+                new Location("Tampa"), new PositionType("Supervisor"),
+                new CoreCompetency("Leadership"));
 
+
+        String pattern = "\nID: " + test_job.getId() + "\nName: " + "Data not available" + "\nEmployer: " +
+                "Data not available" + "\nLocation: " + test_job.getLocation().getValue() + "\nPosition Type: " + test_job.getPositionType().getValue() +
+                "\nCore Competency: " + test_job.getCoreCompetency().getValue() + "\n";
+
+        assertEquals(pattern, test_job.toString());
+    }
 }

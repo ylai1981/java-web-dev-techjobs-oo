@@ -8,10 +8,10 @@ public class Job {
     private static int nextId = 1;
 
     private String name;
-    private String employer;
-    private String location;
-    private String positionType;
-    private String coreCompetency;
+    private Employer employer;
+    private Location location;
+    private PositionType positionType;
+    private CoreCompetency coreCompetency;
 
     // TODO: Add two constructors - one to initialize a unique ID and a second to initialize the
     //  other five fields. The second constructor should also call the first in order to initialize
@@ -22,7 +22,7 @@ public class Job {
         nextId++;
     }
 
-    public Job(String name, String employer, String location, String positionType, String coreCompetency) {
+    public Job(String name, Employer employer, Location location, PositionType positionType, CoreCompetency coreCompetency) {
         this();
         this.name = name;
         this.employer = employer;
@@ -61,19 +61,19 @@ public class Job {
         return name;
     }
 
-    public String getEmployer() {
+    public Employer getEmployer() {
         return employer;
     }
 
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public String getPositionType() {
+    public PositionType getPositionType() {
         return positionType;
     }
 
-    public String getCoreCompetency() {
+    public CoreCompetency getCoreCompetency() {
         return coreCompetency;
     }
 
@@ -81,52 +81,57 @@ public class Job {
         this.name = name;
     }
 
-    public void setEmployer(String employer) {
+    public void setEmployer(Employer employer) {
         this.employer = employer;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 
-    public void setPositionType(String positionType) {
+    public void setPositionType(PositionType positionType) {
         this.positionType = positionType;
     }
 
-    public void setCoreCompetency(String coreCompetency) {
+    public void setCoreCompetency(CoreCompetency coreCompetency) {
         this.coreCompetency = coreCompetency;
     }
 
     @Override
     public String toString() {
-        String str = "\n"+
-                "ID: " + id +
-                "\nName: " + name +
-                "\nEmployer: " + employer +
-                "\nLocation: " + location +
-                "\nPosition Type: " + positionType +
-                "\nCore Competency: " + coreCompetency +
-                "\n";
+
 
         if(getName() == null || getName() == ""){
             name = "Data not available";
         }
 
-        if(getEmployer() == null || getEmployer() == ""){
-            employer = "Data not available";
+        if(getEmployer() == null || getEmployer().getValue() == null || getEmployer().getValue() == ""){
+            employer.setValue("Data not available");
+
         }
 
-        if(getLocation() == null || getLocation() == ""){
-            location = "Data not available";
+        if(getLocation() == null || getLocation().getValue() == null || getLocation().getValue() == ""){
+            location.setValue("Data not available");
+
         }
 
-        if(getPositionType() == null || getPositionType() == ""){
-            positionType = "Data not available";
+        if(getPositionType() == null || getPositionType().getValue() == null || getPositionType().getValue() == ""){
+            positionType.setValue("Data not available");
         }
 
-        if(getCoreCompetency() == null || getCoreCompetency() == ""){
-            coreCompetency = "Data not available";
+        if(getCoreCompetency() == null || getCoreCompetency().getValue() == null || getCoreCompetency().getValue() == ""){
+            coreCompetency.setValue("Data not available");
         }
+
+
+        String str = "\n"+
+                "ID: " + id +
+                "\nName: " + this.name +
+                "\nEmployer: " + employer +
+                "\nLocation: " + location +
+                "\nPosition Type: " + positionType +
+                "\nCore Competency: " + coreCompetency +
+                "\n";
         return str;
     }
 }
